@@ -1,0 +1,130 @@
+
+<html><head><title></title></head>
+<body bgcolor="#C0C0C0" topmargin=2 leftmargin=5>
+<p><center>
+<script language="JavaScript"><!--
+
+function Calendar(Month,Year)
+{
+     document.write("<FORM NAME='Cal'><TABLE BGCOLOR='#C0C0C0'><TR><TD ALIGN=LEFT>");
+     document.write("<FONT COLOR='#0000BB' FACE='Arial' SIZE=+1>",names[parent.month]," ",parent.year,"</FONT></TD><TD WIDTH=50% ALIGN=RIGHT>");
+     document.write("<SELECT NAME='Month' onChange='changeMonth();'>");
+
+     for (month=0; month<12; month++)
+     {
+          if (month == parent.month)
+               document.write("<OPTION VALUE='",month,"' SELECTED>",names[month],"</OPTION>");
+          else
+               document.write("<OPTION VALUE='",month,"'>",names[month],"</OPTION>");
+     }
+
+     document.write("</SELECT>");
+     document.write("<SELECT NAME='Year' onChange='changeYear();'>");
+
+     for (year=1900; year<2101; year++)
+     {
+          if (year == parent.year)
+               document.write("<OPTION VALUE='",year,"' SELECTED>",year,"</OPTION>");
+          else
+               document.write("<OPTION VALUE='",year,"'>",year,"</OPTION>");
+     }
+
+     document.write("</SELECT></TD></TR><TR><TD ALIGN=CENTER COLSPAN=2>");
+
+     firstDay = new Date(Year,Month,1);
+     startDay = firstDay.getDay();
+
+     if (((Year % 4 == 0) && (Year % 100 != 0)) || (Year % 400 == 0))
+          days[1] = 29; 
+     else
+          days[1] = 28;
+
+     document.write("<TABLE CALLSPACING=0 CELLPADDING=0 BORDER=1 BORDERCOLORDARK='#FFFFFF' BORDERCOLORLIGHT='#C0C0C0'><TR>");
+
+     for (i=0; i<7; i++)
+     {
+          document.write("<TD WIDTH=50 ALIGN=CENTER VALIGN=MIDDLE><FONT SIZE=-1 COLOR='#000000' FACE='ARIAL'><B>",dow[i],"</B></FONT></TD>");
+     }
+
+     document.write("</TR><TR ALIGN=CENTER VALIGN=MIDDLE>");
+
+     var column = 0;
+     var lastMonth = Month - 1;
+     if (lastMonth == -1)
+          lastMonth = 11;
+     for (i=0; i<startDay; i++)
+     {
+          document.write("<TD WIDTH=50 HEIGHT=30><FONT SIZE=-1 COLOR='#808080' FACE='ARIAL'>",days[lastMonth]-startDay+i+1,"</FONT></TD>");
+          column++;
+     }
+
+     for (i=1; i<=days[Month]; i++)
+     {
+
+          if ((i == thisDay)  && (Month == thisMonth) && (Year == thisYear))
+               document.write("<TD WIDTH=50 HEIGHT=30 BGCOLOR='#FFFFFF' BORDERCOLORDARK='#000000' BORDERCOLORLIGHT='#C0C0C0'><FONT SIZE=-1 COLOR='#FF0000' FACE='ARIAL'>",i,"</FONT></TD>");
+          else
+               document.write("<TD WIDTH=50 HEIGHT=30><FONT SIZE=-1 COLOR='#0000BB' FACE='ARIAL'>",i,"</FONT></TD>");
+          column++;
+          if (column == 7)
+          {
+               document.write("</TR><TR ALIGN=CENTER VALIGN=MIDDLE>");
+               column = 0;
+          }
+     }
+
+     if (column > 0)
+     {
+          for (i=1; column<7; i++)
+          {
+               document.write("<TD WIDTH=50 HEIGHT=30><FONT SIZE=-1 COLOR='#808080' FACE='ARIAL'>",i,"</FONT></TD>");
+               column++;
+          }
+     }
+     document.write("</TR></TABLE>");
+     document.write("</FORM></TD></TR></TABLE>");
+}
+
+function array(m0, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11)
+{
+     this[0] = m0; this[1] = m1; this[2]  = m2;  this[3]  = m3;
+     this[4] = m4; this[5] = m5; this[6]  = m6;  this[7]  = m7;
+     this[8] = m8; this[9] = m9; this[10] = m10; this[11] = m11;
+}
+
+function changeMonth () {
+     if (document.Cal.Month.options[document.Cal.Month.selectedIndex].value != "")
+     {
+          parent.month = document.Cal.Month.options[document.Cal.Month.selectedIndex].value;
+          location.href = 'cal.htm';
+     }
+}
+
+function changeYear () {
+     if (document.Cal.Year.options[document.Cal.Year.selectedIndex].value != "")
+     {
+          parent.year = document.Cal.Year.options[document.Cal.Year.selectedIndex].value;
+          location.href = 'cal.htm';
+     }
+}
+
+function y2k(number) { return (number < 1000) ? number + 1900 : number; }
+//-->
+</script>
+<p>
+<center>
+<script language="JavaScript"><!--
+var names = new array("January","February","March","April","May","June","July","August","September","October","November","December");
+var days  = new array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+var dow   = new array("Sun","Mon","Tue","Wed","Thu","Fri","Sat","","","","","");
+var today     = new Date();
+var thisDay   = today.getDate();
+var thisMonth = today.getMonth();
+var thisYear  = y2k(today.getYear());
+
+Calendar(parent.month,parent.year);
+//-->
+</script>
+</center>
+</body></html>
+
